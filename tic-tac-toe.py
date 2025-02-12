@@ -10,15 +10,15 @@ def board(spots):
             print(game_board[i][j],end="")
         print()
 
-def input():
-    pass
-def check():
+def spot_input():
+    user_input = str(input("Pick a spot to place your mark: "))
+    return user_input
+def winner_check():
     pass
 def main():
-    board_spaces = []
-    for i in range(1,10):
-        board_spaces.append(str(i))
+    board_spaces = [i for i in range(1,10)]
     board(board_spaces)
+    
 
 if __name__ == "__main__":
     main()
