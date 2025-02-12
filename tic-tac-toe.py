@@ -34,12 +34,22 @@ def winner_check(spots,scores):
     #check diagonals
 
 
+def winner_check_JT(spots):
+    if spots[0] == spots[4] == spots[8] == "O":
+        return (False, "O wins")
+    if spots[2] == spots[4] == spots[8] == "O":
+        return (False, "O wins")
+    else:
+        return True
+
+
 def main():
     board_spaces = [i for i in range(1,10)]
     play = True
     #Player 1 = X Player 2 = O
     scores = {'Player 1':0,'Player 2':0}
     while play:
+        board(board_spaces)
         board(board_spaces)
         user_spot = spot_input()
         #puts user input into correct spot
