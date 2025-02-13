@@ -15,7 +15,7 @@ def spot_input():
     return user_input
 
 def winner_check(spots,scores):
-    #check top
+    #check rows
     for i in range(len(spots),3):
         if spots[i] == spots[i+1] == spots[i+2]:
             if spots[i] == "X":
@@ -25,11 +25,7 @@ def winner_check(spots,scores):
                 scores['Player 2'] +=1
                 return (False,"O WINS")
     return (True, "KEEP PLAYING")
-    #check middle
-
-    #check bottom
-
-    #check rows
+    #check columns
 
     #check diagonals
 
