@@ -24,24 +24,29 @@ def winner_check(spots,scores):
             else:
                 scores['Player 2'] +=1
                 return (False,"O WINS")
-    return (True, "KEEP PLAYING")
-    #check middle
-
-    #check bottom
-
-    #check rows
-
+    #check columns
+    for i in range (3):
+        if spots[i] == spots[i+3] == spots[i+6]:
+            if spots[i] == "X":
+                scores['Player 1'] +=1
+                return (False, "X WINS")
+            else:
+                scores['Player 2'] +=1
+                return (False,"O WINS")
     #check diagonals
-
-
-def winner_check_JT(spots):
     if spots[0] == spots[4] == spots[8] == "O":
-        return (False, "O wins")
-    if spots[2] == spots[4] == spots[8] == "O":
-        return (False, "O wins")
-    else:
-        return True
-
+        return (False, "O WINS")
+    elif spots[2] == spots[4] == spots[8] == "O":
+        return (False, "O WINS")
+    #check full board (tie)
+    full_board = True
+    for i in spots:
+        if i != "X" and i != "O":
+            full_board = False
+    if full_board:
+        return (False, "TIE")
+    #keep playing otherwise
+    return (True, "KEEP PLAYING")
 
 def main():
     board_spaces = [i for i in range(1,10)]
@@ -49,7 +54,6 @@ def main():
     #Player 1 = X Player 2 = O
     scores = {'Player 1':0,'Player 2':0}
     while play:
-        board(board_spaces)
         board(board_spaces)
         user_spot = spot_input()
         #puts user input into correct spot
