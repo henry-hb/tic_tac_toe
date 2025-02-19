@@ -10,14 +10,16 @@ def board(spots):
             print(game_board[i][j],end="")
         print()
 
-def spot_input():
+def spot_input(spots):
     user_spot = 0
     user_mark = "EMPTY"
     #makes sure input matches intended inputs
-    while(user_spot<1 or user_spot>9):
+    while(user_spot<1 or user_spot>9 or spots[user_spot-1] != user_spot):
         user_spot = int(input("Pick a spot to place your mark (1-9): "))
         if user_spot<1 or user_spot>9:
             print("Please input a number between 1 and 9")
+        if user_spot != spots[user_spot-1]:
+            print("Space has already been chosen. Pick a valid space.")
     user_spot_str = str(user_spot)
     while(user_mark != "X" and user_mark != "O"):
         user_mark = str.upper(input("What mark are you (X or O): "))
@@ -70,21 +72,27 @@ def winner_check(spots,scores):
     return (True, "KEEP PLAYING")
 
 def main():
-    board_spaces = [i for i in range(1,10)]
-    play = True
+    full_game = True
     #Player 1 = X Player 2 = O
     scores = {'Player 1':0,'Player 2':0}
-    while play:
+    while full_game:
+        board_spaces = [i for i in range(1,10)]
+        current_round = True
+        while current_round:
+            board(board_spaces)
+            user_spot,user_mark = spot_input(board_spaces)
+            #puts user input into correct spot
+            for i in board_spaces:
+                if str(i) == user_spot:
+                    board_spaces[i-1]=user_mark
+            current_round,win_message = winner_check(board_spaces,scores)
         board(board_spaces)
-        user_spot,user_mark = spot_input()
-        #puts user input into correct spot
-        #Checks user input and restarts loop if false
-        for i in board_spaces:
-            if str(i) == user_spot:
-                board_spaces[i-1]=user_mark
-        play,win_message = winner_check(board_spaces,scores)
-    board(board_spaces)
-    print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
+        print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
+        full_game_input = ""
+        while full_game_input != "Y" and full_game_input != "N":
+            full_game_input = str.upper(input("Do you want to keep playing (y/n)"))
+        full_game = (full_game_input == "Y")
+    print("Good Game!")
 
 if __name__ == "__main__":
     main()
