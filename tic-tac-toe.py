@@ -92,7 +92,9 @@ def main():
         while full_game_input != "Y" and full_game_input != "N":
             full_game_input = str.upper(input("Do you want to keep playing (y/n)"))
         full_game = (full_game_input == "Y")
-    print("Good Game!")
+    print("Good Game! Final Score:")
+    print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']}")
+
 
 if __name__ == "__main__":
     main()
