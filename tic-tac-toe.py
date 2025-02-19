@@ -11,12 +11,23 @@ def board(spots):
         print()
 
 def spot_input():
-    user_input = str(input("Pick a spot to place your mark: ")),str.upper(input("What mark are you: "),)
-    return user_input
+    user_spot = 0
+    user_mark = "EMPTY"
+    #makes sure input matches intended inputs
+    while(user_spot<1 or user_spot>9):
+        user_spot = int(input("Pick a spot to place your mark (1-9): "))
+        if user_spot<1 or user_spot>9:
+            print("Please input a number between 1 and 9")
+    user_spot_str = str(user_spot)
+    while(user_mark != "X" and user_mark != "O"):
+        user_mark = str.upper(input("What mark are you (X or O): "))
+        if user_mark != "X" and user_mark != "O":
+            print("Please input either X or O")
+    return (user_spot_str, user_mark)
 
 def winner_check(spots,scores):
     #check rows
-    for i in range(len(spots),3):
+    for i in range(0,len(spots),3):
         if spots[i] == spots[i+1] == spots[i+2]:
             if spots[i] == "X":
                 scores['Player 1'] +=1
@@ -34,10 +45,20 @@ def winner_check(spots,scores):
                 scores['Player 2'] +=1
                 return (False,"O WINS")
     #check diagonals
-    if spots[0] == spots[4] == spots[8] == "O":
-        return (False, "O WINS")
-    elif spots[2] == spots[4] == spots[8] == "O":
-        return (False, "O WINS")
+    if spots[0] == spots[4] == spots[8]:
+        if spots[0] == "X":
+            scores['Player 1'] +=1
+            return (False, "X WINS")
+        else:
+            scores['Player 2'] +=1
+            return (False, "O WINS")
+    elif spots[2] == spots[4] == spots[8]:
+        if spots[2] == "X":
+            scores['Player 1'] +=1
+            return (False, "X WINS")
+        else:
+            scores['Player 2'] +=1
+            return (False, "O WINS")
     #check full board (tie)
     full_board = True
     for i in spots:
@@ -55,15 +76,15 @@ def main():
     scores = {'Player 1':0,'Player 2':0}
     while play:
         board(board_spaces)
-        user_spot = spot_input()
+        user_spot,user_mark = spot_input()
         #puts user input into correct spot
         #Checks user input and restarts loop if false
-        if user_spot[1] == "X" or user_spot[1] == "O":
-            for i in board_spaces:
-                if str(i) == user_spot[0]:
-                    board_spaces[i-1]=user_spot[1]
-            play,win_message = winner_check(board_spaces,scores)
-            print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
+        for i in board_spaces:
+            if str(i) == user_spot:
+                board_spaces[i-1]=user_mark
+        play,win_message = winner_check(board_spaces,scores)
+    board(board_spaces)
+    print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
 
 if __name__ == "__main__":
     main()
