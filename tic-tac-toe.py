@@ -11,7 +11,7 @@ def board(spots):
         print()
 
 def spot_input():
-    user_input = [str(input("Pick a spot to place your mark: ")),str.upper(input("What mark are you: "),)]
+    user_input = str(input("Pick a spot to place your mark: ")),str.upper(input("What mark are you: "),)
     return user_input
 
 def winner_check(spots,scores):
@@ -46,14 +46,15 @@ def main():
     scores = {'Player 1':0,'Player 2':0}
     while play:
         board(board_spaces)
-        board(board_spaces)
         user_spot = spot_input()
         #puts user input into correct spot
-        for i in board_spaces:
-            if str(i) == user_spot[0]:
-                board_spaces[i-1]=user_spot[1]
-        play,win_message = winner_check(board_spaces,scores)
-        print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
+        #Checks user input and restarts loop if false
+        if user_spot[1] == "X" or user_spot[1] == "O":
+            for i in board_spaces:
+                if str(i) == user_spot[0]:
+                    board_spaces[i-1]=user_spot[1]
+            play,win_message = winner_check(board_spaces,scores)
+            print(f"Player 1 score: {scores['Player 1']} \nPlayer 2 score: {scores['Player 2']} \n{win_message}")
 
 if __name__ == "__main__":
     main()
